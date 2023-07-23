@@ -1,0 +1,16 @@
+services:
+  nginx:
+    image: nginx:1.25.1
+    volumes:
+      - type: bind
+        source: ./nginx/default.conf
+        target: /etc/nginx/conf.d/default.conf
+        read_only: true
+    ports:
+      - 8080:80
+    depends_on:
+      - web
+  web:
+    image: python:3.11.4
+    entrypoint: python3
+    command: ['-m', 'http.server', '8000']
